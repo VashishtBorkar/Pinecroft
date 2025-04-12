@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+
+/* Custom CSS Classes */
+.hover-custom {
+    @apply hover:bg-gray-700 transition;
+}
+
+.btn-custom {
+    @apply w-full flex items-center gap-2 p-3 rounded-lg;
+}
+
