@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Username from "./Username";
 import { formatDistanceToNowStrict } from 'date-fns';
 
-function PostCard({ post, ...props }) {
+function PostCard({ post, showHeader=true }) {
   const navigate = useNavigate();
 
   const goToPost = () => {

@@ -13,9 +13,7 @@ import userRoutes from './routes/userRoutes.js';
 import communitiesRoutes from './routes/communitiesRoutes.js';
 import dotenv from "dotenv";
 
-dotenv.config({path: '../.env'});
-
-
+dotenv.config();
 
 const secret = "secret123";
 const app = express();
