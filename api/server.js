@@ -10,6 +10,10 @@ import jwt from 'jsonwebtoken';
 import authRoutes from './routes/authRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import dotenv from "dotenv";
+
+dotenv.config();
+
 
 
 
@@ -26,9 +30,12 @@ app.use(cors({
     credentials: true,
 }));
 
-mongoose.connect('mongodb://localhost:27017/Pinecroft', {})
-    .then(() => console.log('Connected to MongoDB'))
-    .catch(err => console.error('MongoDB connection error:', err));
+console.log("Mongo URI:", process.env.MONGO_URI);
+
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("Connected to MongoDB Atlas"))
+  .catch(err => console.error("MongoDB connection error:", err));
+  
 
 const db = mongoose.connection;
 db.on('error', console.log);

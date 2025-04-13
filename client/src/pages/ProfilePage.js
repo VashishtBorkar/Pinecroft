@@ -4,7 +4,7 @@ import axios from "axios";
 import PostCard from "../components/PostCard";
 
 function ProfilePage() {
-    const { userId } = useParams(); // Assuming you're routing with /user/:userId
+    const { id } = useParams(); // Assuming you're routing with /user/:userId
     const [user, setUser] = useState(null);
     const [tab, setTab] = useState("posts"); // "overview", "posts", or "comments"
     const [userPosts, setUserPosts] = useState([]);
@@ -12,7 +12,7 @@ function ProfilePage() {
     useEffect(() => {
         const fetchUser = async () => {
           try {
-            const res = await axios.get(`http://localhost:4000/api/users/${userId}`);
+            const res = await axios.get(`http://localhost:4000/api/users/${id}`);
             setUser(res.data);
           } catch (err) {
             console.error("Failed to fetch user", err);
@@ -21,7 +21,7 @@ function ProfilePage() {
     
         const fetchUserPosts = async () => {
           try {
-            const res = await axios.get(`http://localhost:4000/api/users/${userId}/posts`);
+            const res = await axios.get(`http://localhost:4000/api/users/${id}/posts`);
             setUserPosts(res.data.posts || []);
           } catch (err) {
             console.error("Failed to fetch user posts", err);
@@ -30,20 +30,18 @@ function ProfilePage() {
     
         fetchUser();
         fetchUserPosts();
-      }, [userId]);
+      }, [id]);
     
-
-    <div className="flex items-center gap-6 mb-6">
-      <img
-        src={user?.profilePicture || "/default-profile-pic-pinecroft.jpg"}
-        alt="profile"
-        className="w-24 h-24 rounded-full object-cover"
-      />
-      <div>
-        <h2 className="text-3xl font-bold text-white">{user?.username}</h2>
-        {/* You can add other info here later, like join date or bio */}
-      </div>
-    </div>
+      return (
+        <div className="max-w-3xl">
+            <h1 className="  text-3xl font-bold text-gray-500 text"> Profile Page </h1>
+            {user && <h2>{user.username}</h2>}
+            {userPosts.map(post => (
+              <PostCard key={post._id} post={post} />
+            ))}
+        </div>
+      )
+    
 }
 
 export default ProfilePage;
