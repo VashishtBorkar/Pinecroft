@@ -1,5 +1,6 @@
 // src/components/Comment.js
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNowStrict } from 'date-fns';
+import Username from './Username';
 
 function Comment({ comment }) {
   const { author, content, createdAt } = comment;
@@ -10,10 +11,12 @@ function Comment({ comment }) {
         <img
             alt="avatar"
             className="w-6 h-6 rounded-full"
+            src={author?.profilePicture || "/default-profile-pic-pinecroft.jpg"}
         />
-        <span className="font-medium">{author?.username || 'Anonymous'}</span>
+        <Username username={author?.username} userId={author?._id} />
+        <span className="text-xs text-gray-400">  • </span>
         <span className="text-xs text-gray-400">
-          • {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
+          {formatDistanceToNowStrict(new Date(createdAt), { addSuffix: true })}
         </span>
       </div>
       <p className="text-gray-200">{content}</p>

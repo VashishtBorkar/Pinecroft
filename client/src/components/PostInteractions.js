@@ -8,7 +8,7 @@ function PostInteractions({ post }) {
                     <ArrowUpIcon className="p-2 rounded-full"/>
                 </button>
                 
-                <span className="mx-2">{post.comments.length}</span>
+                <span className="mx-2">{(post.upvotes?.length ?? 0) - (post.downvotes?.length ?? 0)}</span>
 
                 <button className="w-8 h-8 rounded-full hover:bg-zinc-600">
                     <ArrowDownIcon className="p-2 rounded-full"/>
@@ -17,7 +17,7 @@ function PostInteractions({ post }) {
 
             <div className="flex items-center gap-1 bg-zinc-700 rounded-full hover:bg-zinc-600">
                 <ChatBubbleOvalLeftIcon className="p-2 w-8 h-8 "/>
-                <span className="mr-2">{post.comments.length}</span>
+                <span className="mr-2">{post.comments?.length ?? 0}</span>
             </div>
         </div>
     )

@@ -32,16 +32,17 @@ export const getAllPosts = async (req, res) => {
 
 export const getPostById = async (req, res) => {
     try{
-        const post = await Post.findById(req.params.id).populate('author', 'username')
+        const post = await Post.findById(req.params.id).populate('author', 'username profilePicture')
         .populate({
             path: 'comments',
-            populate: { path: 'author', select: 'username' }
+            populate: { path: 'author', select: 'username profilePicture' }
           });
 
         if (!post) return res.status(404).json({ message: "Post not found" });
 
         res.status(200).json(post);
     } catch (error) {
+        console.error("🔥 Error in getPostById:", error);  // 👈 log full stack trace
         res.status(500).json({ message: "Error getting post by id", error });
     }
 };
@@ -152,5 +153,3 @@ export const getPaginatedPosts = async (req, res) => {
         res.status(500).json({ message: "Error getting paginated posts", error });
       }
     };
-
-  

@@ -1,5 +1,7 @@
 import PostInteractions from "./PostInteractions";
 import { useNavigate } from "react-router-dom";
+import Username from "./Username";
+import { formatDistanceToNowStrict } from 'date-fns';
 
 function PostCard({ post, ...props }) {
   const navigate = useNavigate();
@@ -19,19 +21,20 @@ function PostCard({ post, ...props }) {
         onClick={goToPost}
       >
         {/* Header of post containing author, profile pic, date posted */}
-        <div className="flex items-center gap-3 mb-2 ">
-          <img
-            src={post.author?.profilePicture || "/default-profile-pic-pinecroft.jpg"}
-            alt="avatar"
-            className="w-8 h-8 rounded-full"
-          />
-          <span 
-            className="cursor-pointer text-sm text-white  hover:underline"
-            onClick={goToAuthor}
-          >
-            {post.author?.username}
-          </span>
-        </div>
+        {showHeader && (
+          <div className="flex items-center gap-1 mb-2 ">
+            <img
+              src={post.author?.profilePicture || "/default-profile-pic-pinecroft.jpg"}
+              alt="avatar"
+              className="w-8 h-8 rounded-full mr-1.5"
+            />
+            <Username username={post.author?.username} userId={post.author?._id} />
+            <span className="text-xs text-gray-400">
+              • {formatDistanceToNowStrict(new Date(post.createdAt), { addSuffix: true })}
+            </span>
+          </div>
+        )}
+        
         <h3 className="text-xl font-bold text-white mb-1">{post.title}</h3>
         <p className="text-gray-300 text-sm line-clamp-3 mb-2">{post.content}</p>
         <PostInteractions post={post} />

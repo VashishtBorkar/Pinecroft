@@ -4,10 +4,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Comment from "../components/Comment.js";
 import PostInteractions from "../components/PostInteractions.js";
+import Username from "../components/Username.js";
+import { formatDistanceToNowStrict } from 'date-fns';
+
 
 function SinglePostPage(){
     const { id } = useParams(); // 👈 get the post ID from the URL
     const [post, setPost] = useState({});
+    const [user, setUser] = useState({});
     const [commentText, setCommentText] = useState("");
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -24,7 +28,7 @@ function SinglePostPage(){
           setLoading(false);
         }
       };
-  
+
       fetchPost();
     }, [id]);
 
@@ -54,16 +58,14 @@ function SinglePostPage(){
       };
 
 
-    if (loading) {
-        // Show a loading indicator until the post is fully fetched
-        return <div>Loading...</div>;
+      if (loading || !post || !post.author) {
+        return <div>Loading post...</div>;
       }
 
       // console.log("This is the post:", post);
 
-
     return (
-        <div div className="max-w-3xl px-4">
+        <div className="max-w-3xl px-4">
 
             {/* Content */}
             <div className="flex items-stretch gap-x-2">
@@ -73,13 +75,17 @@ function SinglePostPage(){
                 >
                     <ArrowLeftIcon className=""/>
                 </button>
-                <div>
+                <div className="flex items-center mx-2 gap-x-2">
                     <img 
-                        className="rounded-full text-sm" 
+                        className="w-12 h-12 rounded-full text-sm" 
                         alt="profile pic" 
-                        url={post.author?.profilePicture} 
+                        src={post.author?.profilePicture || "/default-profile-pic-pinecroft.jpg" } 
                     />
-                    <p> {post.author?.username} </p>
+                    <Username username={post.author?.username} userId={post.author?._id} />
+                    <span className="text-xs text-gray-400">  • </span>
+                    <span className="text-xs text-gray-400">
+                      {formatDistanceToNowStrict(new Date(post.createdAt), { addSuffix: true })}
+                    </span>
                 </div>
             </div>
             <h2 className="text-3xl font-bold text-text-color text mt-2 mb-2"> {post.title}</h2>
