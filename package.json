@@ -9,7 +9,6 @@
     "global": "^4.4.0",
     "mongoose": "^8.12.1",
     "nodemon": "^3.1.9",
-    "react-clickout-handler": "^1.2.1",
     "react-router-dom": "^7.4.1"
   }
 }
