@@ -2,16 +2,16 @@ import Input from "./Input";
 import ButtonCustom from "../ ButtonCustom";
 import { useState, useContext, useEffect, useRef } from "react";
 import axios from 'axios';
-import AuthModalContext from "./AuthModalContext";
+import AuthModalContext  from "./AuthModalContext";
 import {EyeIcon, EyeSlashIcon} from '@heroicons/react/24/outline';
-import UserContext from "./UserContext.js";
+import { UserContext } from "./UserContext.js";
 
 
 
 function AuthModal() {
     // Variables for displaying the Log In/Sign up
-    const context = useContext(AuthModalContext);
-    const {modalType, setModalType} = context;
+
+    const {modalType, setModalType} = useContext(AuthModalContext);
 
     const { user, setUser, login } = useContext(UserContext);
 

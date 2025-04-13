@@ -3,7 +3,7 @@ import {MagnifyingGlassIcon, CogIcon, WalletIcon, UserIcon, ChevronDownIcon, Plu
 import ButtonCustom from '../ ButtonCustom.js';
 import {useState, useEffect, useRef, useContext} from 'react';
 import AuthModalContext from "../Login/AuthModalContext.js";
-import UserContext from "../Login/UserContext.js";
+import { UserContext } from "../Login/UserContext.js";
 import SearchBar from "./SearchBar.js";
 import CreatePostModal from "../CreatePostModal.js";
 import { Link } from 'react-router-dom'; 

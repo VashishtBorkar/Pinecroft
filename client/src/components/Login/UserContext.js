@@ -40,7 +40,7 @@ export const UserProvider = ({ children }) => {
                 {}, 
                 { withCredentials: true }
             );
-            setUser(null); // Clear user state after logout
+            setUser(null); 
         } catch (err) {
             console.error("Logout error:", err);
         }
@@ -81,4 +81,5 @@ export const UserProvider = ({ children }) => {
     );
  }
 
-export default UserContext;
+export { UserContext };
+export default UserProvider;

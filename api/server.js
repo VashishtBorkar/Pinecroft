@@ -10,10 +10,10 @@ import jwt from 'jsonwebtoken';
 import authRoutes from './routes/authRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import communitiesRoutes from './routes/communitiesRoutes.js';
 import dotenv from "dotenv";
 
-dotenv.config();
-
+dotenv.config({path: '../.env'});
 
 
 
@@ -33,9 +33,9 @@ app.use(cors({
 console.log("Mongo URI:", process.env.MONGO_URI);
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("Connected to MongoDB Atlas"))
-  .catch(err => console.error("MongoDB connection error:", err));
-  
+    .then(() => console.log("Connected to MongoDB Atlas"))
+    .catch(err => console.error("MongoDB connection error:", err));
+
 
 const db = mongoose.connection;
 db.on('error', console.log);
@@ -47,11 +47,10 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/communities', communitiesRoutes);
 
 
 
 app.listen(4000, () => {
     console.log("Server is running on port 4000");
 });
-
-
