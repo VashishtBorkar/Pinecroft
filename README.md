@@ -17,12 +17,8 @@
   - [Installation](#installation)  
   - [Environment Variables](#environment-variables)  
   - [Running Locally](#running-locally)  
-- [Folder Structure](#folder-structure)  
-- [API Endpoints](#api-endpoints)  
 - [Usage](#usage)  
-- [Screenshots](#screenshots)  
-- [Roadmap](#roadmap)  
-- [Contributing](#contributing)  
+- [Screenshots](#screenshots)   
 - [License](#license)  
 - [Contact](#contact)  
 
