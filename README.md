@@ -1,20 +1,24 @@
 
 # Pincecroft
-A social media platform for commercial investors to discuss, share, and track market insights in one place.
-
-<p align="center">
-  <img src="./assets/pinecroft-demo.gif" alt="GIF of Website" width="600" />
-</p>
+A social media platform for commercial investors to discuss, share, and track market insights all in one place.
 
 
 ## Table of Contents
-
+- [Demo](#demo)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
 - [Running Locally](#running-locally)
 - [Screenshots](#screenshots)
+
+---
+
+## Demo
+
+<div align="">
+  <a href="https://youtu.be/Y-XecQ3q8N8" target="_blank">Link to demo video</a>
+</div>
 
 ---
 
