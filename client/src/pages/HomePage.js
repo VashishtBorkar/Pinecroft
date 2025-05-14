@@ -43,7 +43,6 @@ function HomePage(){
   return (
     <div className="overflow-x-hidden min-h-screen bg-black">
       <div className="max-w-3xl px-4 ">
-        {/* <h1 className="text-3xl font-bold text-gray-500 text"> Home Page</h1> */}
         {posts.map((post) => (
           <React.Fragment key={post._id}>
               <PostCard 

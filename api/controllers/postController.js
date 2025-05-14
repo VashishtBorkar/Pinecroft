@@ -179,31 +179,30 @@ export const getPostsByCommunity = async (req, res) => {
 
 export const getFollowingPosts = async (req, res) => {
   try {
-    // 1) Get the currently authenticated user’s ID
+    // Get the currently authenticated user’s ID
     const userId = req.user.id;
 
-    // 2) Load their `following` array (just IDs)
+    // Load their `following` array (just IDs)
     const me = await User.findById(userId).select('following');
     const followIds = Array.isArray(me.following) ? me.following : [];
 
-    // 3) Pagination params
+    // Pagination params
     const page  = parseInt(req.query.page)  || 1;
     const limit = parseInt(req.query.limit) || 10;
     const skip  = (page - 1) * limit;
 
-    // 4) Query posts where author ∈ followingIds
+    // Query posts where author ∈ followingIds
     const posts = await Post.find({ author: { $in: followIds } })
       .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit)
-      .populate('author', '_id username profilePicture')    // optional: show author info
-      .populate('community', '_id name');                   // optional: show community name
+      .populate('author', '_id username profilePicture')  
+      .populate('community', '_id name');                  
 
-    // 5) Compute hasNextPage
+    // Compute hasNextPage
     const total = await Post.countDocuments({ author: { $in: followIds } });
     const hasNextPage = skip + posts.length < total;
 
-    // 6) Return
     return res.status(200).json({ posts, hasNextPage });
   } catch (err) {
     console.error('Error fetching following posts:', err);

@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const secret = process.env.SECRET_KEY; // Move this to environment variables in production
+const secret = process.env.SECRET_KEY;
 
 export const verifyToken = (req, res, next) => {
     const token = req.cookies.token; // Read JWT from cookies
@@ -15,9 +15,9 @@ export const verifyToken = (req, res, next) => {
     try {
         // Verify JWT and extract user data
         const decoded = jwt.verify(token, secret);
-        req.user = { id: decoded.id }; // Attach user ID to req.user
+        req.user = { id: decoded.id }; 
 
-        next(); // Move to the next middleware or route handler
+        next();
     } catch (err) {
         return res.status(401).json({ error: "Unauthorized: Invalid token" });
     }

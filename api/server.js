@@ -13,9 +13,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
 const app = express();
-
 
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -26,12 +24,10 @@ app.use(cors({
     credentials: true,
 }));
 
-console.log("Mongo URI:", process.env.MONGO_URI);
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to MongoDB Atlas"))
     .catch(err => console.error("MongoDB connection error:", err));
-
 
 const db = mongoose.connection;
 db.on('error', console.log);
@@ -46,9 +42,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/communities', communitiesRoutes);
 app.use('/api/interactions', interactionRoutes);
 app.use('/api/stocks', stockRoutes);
-
-
-
 
 app.listen(4000, () => {
     console.log("Server is running on port 4000");

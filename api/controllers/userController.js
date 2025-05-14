@@ -6,7 +6,7 @@ export const getUserById = async (req, res) => {
     const userId = req.params.id;
 
     const user = await User.findById(userId)
-    .select("username profilePicture followers communities") // 👈 only public fields
+    .select("username profilePicture followers communities") 
     .populate("followers", "_id username profilePicture")
     .populate("communities", "_id name members");
 
@@ -69,7 +69,6 @@ export const getUserPosts = async (req, res) => {
     }
   };
 
-  // controllers/userController.js
 export const searchUsers = async (req, res) => {
   try {
     const q = req.query.q || '';

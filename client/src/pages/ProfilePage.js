@@ -59,7 +59,6 @@ function ProfilePage() {
         fetchProfile();
 
         if (!response.data || response.status !== 200) {
-          // Something went wrong, revert the optimistic update
           setFollowing(prevState => !prevState);
           console.error("Follow toggle returned unexpected response");
         }
@@ -90,8 +89,8 @@ function ProfilePage() {
               />
               <h2 className="text-3xl font-bold">{profileUser.username}</h2> 
             </div>
-            {/* Follow Button */}
 
+            {/* Follow Button */}
             {!isOwnProfile && (
               <button
                 className={`border-2 rounded-full px-4 py-2 font-bold transition ${

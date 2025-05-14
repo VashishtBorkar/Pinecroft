@@ -5,7 +5,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const secret = process.env.SECRET_KEY; // Move this to environment variables in production
+const secret = process.env.SECRET_KEY; 
 
 export const registerUser = async (req, res) => {
     console.log("Received /register request:", req.body);
@@ -106,12 +106,11 @@ export const getUser = (req, res) => {
                 if (!user) {
                 return res.status(404).json({ error: 'User not found' });
                 }
-                // send back exactly what you need on the client
                 res.json({
                 id: user._id,
                 username: user.username,
                 email: user.email,
-                communities: user.communities,  // this is now an array of { _id, name }
+                communities: user.communities,  
                 following: user.following
                 });
             })

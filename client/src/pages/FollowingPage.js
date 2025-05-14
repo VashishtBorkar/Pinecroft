@@ -38,9 +38,8 @@ function FollowingPage() {
   };
 
   useEffect(() => {
-    // Only fetch once user info is loaded and they follow someone
+
     if (!userLoading) {
-      // If user.following is empty, no need to fetch
       if (!Array.isArray(user?.following) || user.following.length === 0) {
         setHasNextPage(false);
         return;
@@ -51,7 +50,6 @@ function FollowingPage() {
 
   if (userLoading) return <div className="text-center text-gray-400 p-8">Loading...</div>;
 
-  // If the user follows no one
   if (!Array.isArray(user?.following) || user.following.length === 0) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">

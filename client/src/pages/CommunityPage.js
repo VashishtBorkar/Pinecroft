@@ -193,12 +193,6 @@ function CommunityPage() {
           </button>
         </div>
 
-        {/* Description */}
-        {/* <div className="text-gray-400 mb-4">
-          {community.description}
-        </div> */}
-
-
         {/* <div className="h-px bg-border-color my-6" /> */}
 
         <div className='flex justify-items-center my-4'>

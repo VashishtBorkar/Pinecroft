@@ -17,7 +17,7 @@ const PostSchema = new mongoose.Schema({
     image: { type: String, required: false }, 
     upvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
     downvotes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }], // List of references to comments
+    comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
     createdAt: { type: Date, default: Date.now}
 });
 

@@ -41,16 +41,6 @@ export const addVote = async(req, res) => {
           voteCount: target.upvotes.length - target.downvotes.length,
         });
     
-        // res.status(200).json({
-        //   upvotes: target.upvotes.length,
-        //   downvotes: target.downvotes.length,
-        //   voteStatus: {
-        //     upvoted: target.upvotes.includes(userId),
-        //     downvoted: target.downvotes.includes(userId),
-
-        //   },
-        // });
-    
       } catch (err) {
         res.status(500).json({ error: "Voting failed", details: err.message });
       }
@@ -61,11 +51,6 @@ export const addComment = async (req, res) => {
       const userId = req.user?.id;
       const { id: postId } = req.params;
       const { content } = req.body;
-  
-      console.log("💬 Adding comment:");
-      console.log("🔑 userId:", userId);
-      console.log("📝 postId:", postId);
-      console.log("📄 content:", content);
   
       if (!userId || !content) {
         return res.status(400).json({ error: "Missing user or comment content" });
@@ -89,10 +74,10 @@ export const addComment = async (req, res) => {
   
       res.status(201).json(comment);
     } catch (err) {
-        console.error("🔥 Error adding comment:");
-        console.error(err); // 👈 LOG FULL ERROR OBJECT
+        console.error("Error adding comment:");
+        console.error(err); 
         if (err.name === "ValidationError") {
-          console.error("📋 Validation errors:");
+          console.error("Validation errors:");
           for (const field in err.errors) {
             console.error(` - ${field}: ${err.errors[field].message}`);
           }

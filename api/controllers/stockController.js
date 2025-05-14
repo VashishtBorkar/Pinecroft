@@ -3,12 +3,12 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 dotenv.config();
 
-const FMP_KEY = process.env.FMP_KEY;  // e.g. your “4nzVXwp…” key
+const FIN_API_KEY = process.env.FIN_API_KEY;
 
 export const getStockQuote = async (req, res) => {
   try {
     const ticker = req.params.ticker.toUpperCase();
-    const url = `https://financialmodelingprep.com/api/v3/quote/${ticker}?apikey=${FMP_KEY}`;
+    const url = `https://financialmodelingprep.com/api/v3/quote/${ticker}?apikey=${FIN_API_KEY}`;
 
 
 

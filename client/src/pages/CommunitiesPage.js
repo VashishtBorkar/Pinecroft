@@ -8,7 +8,6 @@ function CommunitiesPage() {
   useEffect(() => {
     axios.get("http://localhost:4000/api/communities")
       .then((res) => {
-        console.log("Fetched communities:", res.data); // Debug log
         setCommunities(res.data);
       })
       .catch((err) => console.error("Error fetching communities:", err));
