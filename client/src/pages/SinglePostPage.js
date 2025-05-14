@@ -155,7 +155,7 @@ function SinglePostPage(){
           </div>
           
           {/* List of Comments */}
-          <div className="space-y-3">
+          <div className="mt-3 space-y-3">
               {post.comments && post.comments.length > 0 ? (
                   post.comments.map((comment, index) => (
                   <Comment key={comment._id || index} comment={comment} />

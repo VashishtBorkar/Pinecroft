@@ -44,16 +44,21 @@ function FollowingPage() {
         setHasNextPage(false);
         return;
       }
+      setPosts([]);
+      setPage(1);   
+      setHasNextPage(true); 
       fetchFollowingPosts();
     }
-  }, [userLoading, user.following]);
+  }, [userLoading, user?.following?.length]);
 
   if (userLoading) return <div className="text-center text-gray-400 p-8">Loading...</div>;
 
   if (!Array.isArray(user?.following) || user.following.length === 0) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <p className="text-gray-400 text-xl">Follow someone to see their posts.</p>
+      <div className="overflow-x-hidden min-h-screen bg-black">
+        <div className="max-w-3xl px-4">
+          <p className="text-gray-400 text-xl">Follow someone to see their posts.</p>
+        </div>
       </div>
     );
   }

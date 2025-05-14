@@ -76,12 +76,6 @@ export const addComment = async (req, res) => {
     } catch (err) {
         console.error("Error adding comment:");
         console.error(err); 
-        if (err.name === "ValidationError") {
-          console.error("Validation errors:");
-          for (const field in err.errors) {
-            console.error(` - ${field}: ${err.errors[field].message}`);
-          }
-        }
         res.status(500).json({ error: "Failed to add comment" });
       }
       

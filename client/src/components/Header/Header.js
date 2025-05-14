@@ -79,14 +79,39 @@ function Header(){
             </button> 
 
             {isDropdownOpen && (
-            <div ref={dropdownRef} className="absolute right-0 top-12 mt-2 w-40 bg-black border border-border-color rounded-lg shadow-lg">
-              <ul className=" text-white">
-                <li className="px-4 py-2 rounded-sm hover:bg-zinc-800 cursor-pointer" onClick={() => navigate(`/auth/user/${user.id}`)}>View Profile</li>
-                <li className="px-4 py-2 rounded-sm hover:bg-zinc-800 cursor-pointer">Profile Settings</li>
-                <li className="px-4 py-2 rounded-sm hover:bg-zinc-800 cursor-pointer" onClick={logout}>Logout</li>
-              </ul>
-            </div>
-          )}
+              <div ref={dropdownRef} className="absolute right-0 top-12 mt-2 w-40 bg-black border-x border-border-color rounded-lg shadow-lg">
+                <ul className="text-white">
+                  <li 
+                    className="px-4 py-2 rounded-lg hover:bg-zinc-800 cursor-pointer border-t border-border-color" 
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      navigate(`/auth/user/${user.id}`);
+                    }}
+                  >
+                    View Profile
+                  </li>
+
+                  <li 
+                    className="px-4 py-2 rounded-lg hover:bg-zinc-800 cursor-pointer" 
+                    onClick={() => {
+                      setDropdownOpen(false);
+                    }}
+                  >
+                    Profile Settings
+                  </li>
+
+                  <li 
+                    className="px-4 py-2 rounded-lg hover:bg-zinc-800 cursor-pointer border-b border-border-color" 
+                    onClick={() => {
+                      setDropdownOpen(false);
+                      logout();
+                    }}
+                  >
+                    Logout
+                  </li>
+                </ul>
+              </div>
+            )}
 
           </div>
         )}
