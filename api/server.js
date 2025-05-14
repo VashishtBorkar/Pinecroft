@@ -3,19 +3,17 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import bcrypt from 'bcrypt';
-import User from './models/User.js';
-import e from 'express';
-import jwt from 'jsonwebtoken';
 import authRoutes from './routes/authRoutes.js';
 import postRoutes from './routes/postRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import communitiesRoutes from './routes/communitiesRoutes.js';
+import interactionRoutes from './routes/interactionRoutes.js';
+import stockRoutes from './routes/stockRoutes.js';
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const secret = "secret123";
+
 const app = express();
 
 
@@ -46,6 +44,9 @@ app.use('/api/auth', authRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/communities', communitiesRoutes);
+app.use('/api/interactions', interactionRoutes);
+app.use('/api/stocks', stockRoutes);
+
 
 
 

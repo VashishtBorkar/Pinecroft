@@ -1,8 +1,11 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import dotenv from "dotenv";
 
-const secret = "secret123"; // Move this to environment variables in production
+dotenv.config();
+
+const secret = process.env.SECRET_KEY; // Move this to environment variables in production
 
 export const registerUser = async (req, res) => {
     console.log("Received /register request:", req.body);
@@ -95,20 +98,28 @@ export const getUser = (req, res) => {
         const userId = userInfo.id;
         
         User.findById(userId)
+            .populate({ 
+                path: 'communities', 
+                select: '_id name'        // only fetch the id & name 
+            })
             .then(user => {
                 if (!user) {
-                    return res.status(404).json({ error: 'User not found' });
+                return res.status(404).json({ error: 'User not found' });
                 }
+                // send back exactly what you need on the client
                 res.json({
-                    id: user._id,
-                    username: user.username,
-                    email: user.email
+                id: user._id,
+                username: user.username,
+                email: user.email,
+                communities: user.communities,  // this is now an array of { _id, name }
+                following: user.following
                 });
             })
             .catch(err => {
-                console.log(err);
+                console.error(err);
                 res.status(500).json({ error: 'Server error' });
             });
+
     } catch (err) {
         console.log(err);
         res.status(401).json({ error: 'Invalid token' });

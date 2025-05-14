@@ -11,7 +11,7 @@ const CommentSchema = new mongoose.Schema({
 
 const PostSchema = new mongoose.Schema({
     author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required:true },
-    communityId: { type: mongoose.Schema.Types.ObjectId, ref: "Community", required: false }, // Optional community
+    community: { type: mongoose.Schema.Types.ObjectId, ref: "Community", required: false }, // Optional community
     title: { type: String, required: true },
     content: { type: String, required: true }, 
     image: { type: String, required: false }, 

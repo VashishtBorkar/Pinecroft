@@ -9,73 +9,60 @@ export const UserProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:4000/api/auth/user", 
+                    { withCredentials: true }
+                );
+                setUser(response.data);
+            } catch (err) {
+                setUser(null);
+            } finally {
+                setLoading(false);
+            }
+        };
+
         fetchUserData();
     }, []);
 
-    const fetchUserData = async () => {
-        try {
-            const response = await axios.get(
-                "http://localhost:4000/api/auth/user", 
-                { withCredentials: true }
-            );
-            setUser(response.data);
-        } catch (err) {
-            setUser(null);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        axios.get("http://localhost:4000/api/auth/user", { withCredentials: true })
-            .then(response => setUser(response.data))
-            .catch(() => setUser(null));
-    }, []);
-
     const logout = async () => {
-        console.log("logging out");
         try {
             await axios.post(
-                "http://localhost:4000/api/auth/logout", 
-                {}, 
+                "http://localhost:4000/api/auth/logout",
+                {},
                 { withCredentials: true }
             );
-            setUser(null); 
+            setUser(null);
         } catch (err) {
             console.error("Logout error:", err);
         }
     };
 
+
     const login = async (username, password) => {
         try {
-            // First login
-            const loginResponse = await axios.post(
-                "http://localhost:4000/api/auth/login", 
-                { username, password }, 
+            await axios.post(
+                "http://localhost:4000/api/auth/login",
+                { username, password },
                 { withCredentials: true }
             );
-            
-            // Then fetch user data
-            await fetchUserData();
-            return {success:true}; // Indicate success
+            const response = await axios.get(
+                "http://localhost:4000/api/auth/user", 
+                { withCredentials: true }
+            );
+            setUser(response.data);
+            return { success: true };
         } catch (error) {
             console.error("Login error:", error);
-        
-            if (error.response) {
-                if (error.response.status === 401) {
-                    return { success: false, message: "Invalid username or password" };
-                } else if (error.response.data && error.response.data.error) {
-                    return { success: false, message: error.response.data.error };
-                }
-            }
-            
-            return { success: false, message: "Login failed. Please try again." };
+            return { success: false, message: "Login failed." };
         }
     };
 
 
+
     return (
-        <UserContext.Provider value={{ user, setUser, login, logout}}>
+        <UserContext.Provider value={{ user, setUser, login, logout, loading}}>
             {children}
         </UserContext.Provider>
     );

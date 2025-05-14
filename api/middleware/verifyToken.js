@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
+import dotenv from "dotenv";
 
-const secret = "secret123"; // Move this to environment variables in production
+dotenv.config();
+
+const secret = process.env.SECRET_KEY; // Move this to environment variables in production
 
 export const verifyToken = (req, res, next) => {
     const token = req.cookies.token; // Read JWT from cookies

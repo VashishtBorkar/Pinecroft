@@ -23,6 +23,7 @@ function CommunitiesPage() {
         {communities.map((c) => (
           <CommunityCard
             key={c._id}
+            _id={c._id}
             name={c.name}
             description={c.description}
             members={c.members}

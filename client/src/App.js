@@ -1,9 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import { Routes, Route } from 'react-router-dom'; 
 import Header from './components/Header/Header.js';
 import Sidebar from './components/Sidebar';
-import AuthModal from './components/Login/AuthModal';
-import { AuthModalProvider } from "./components/Login/AuthModalContext";
-import { UserProvider } from "./components/Login/UserContext.js";
 import HomePage from "./pages/HomePage.js";
 import ProfilePage from "./pages/ProfilePage.js";
 import WalletPage from './pages/WalletPage.js';
@@ -11,62 +8,60 @@ import CreatePage from './pages/CreatePage.js';
 import CommunitiesPage from './pages/CommunitiesPage.js';
 import TrendingPage from './pages/TrendingPage.js';
 import SinglePostPage from './pages/SinglePostPage.js';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
+import CommunityPage from './pages/CommunityPage.js';
+import LoginLandingPage from './pages/LoginLandingPage.js';
+import SignUpPage from './pages/SignUpPage.js';
+import LoginPage from './pages/LoginPage.js';
+import FollowingPage from './pages/FollowingPage.js';
+import PrivateRoute from './components/PrivateRoute';
+import ScrollToTop from './components/ScrollToTop.js';
+import { useContext } from 'react';
+import { UserContext } from './components/Login/UserContext';
 
 function App() {
-  const [modalType, setModalType] = useState("hidden"); 
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  
-  useEffect(() => {
-    async function checkAuth() {
-      try {
-        const response = await axios.get('http://localhost:4000/api/auth/user', { 
-          withCredentials: true 
-        });
-        
-        if (response.data) {
-          setUser(response.data);
-        }
-      } catch (error) {
-        console.log('Not authenticated');
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    }
-    checkAuth();
-  }, []);
+  const { user, loading } = useContext(UserContext);
 
-  function logout(){
-    axios.post('http://localhost:4000/logout', {}, {withCredentials:true});
-  }
+  if (loading) return <div className="text-white p-8">Loading...</div>;
 
   return (
-    <div className="min-h-screen bg-black overscroll-none">
-      <AuthModalProvider> 
-          {!loading && (
-            <div className="bg-black min-h-screen overflow-auto">
-              <AuthModal />
+    <Routes>
+      <Route path="/login-landing" element={<LoginLandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
+
+      {/* All protected routes */}
+      <Route
+        path="/*"
+        element={
+          <PrivateRoute user={user}>
+
+            <div className="flex flex-col h-screen bg-black"> {/* "bg-black min-h-screen flex flex-col overflow-hidden" */}
+
               <Header />
-              <Sidebar />
-              <div className="w-screen h-full ml-64 mt-24 p-12 px-24 bg-black text-white rounded-lg">
-                <Routes>
-                  <Route path="/home" element={<HomePage />} />
-                  <Route path="/profile" element={<ProfilePage />} />
-                  <Route path="/wallet" element={<WalletPage />} />
-                  <Route path="/create" element={<CreatePage />} />
-                  <Route path="/communities" element={<CommunitiesPage />} />
-                  <Route path="/trending" element={<TrendingPage />} />
-                  <Route path="/auth/posts/:id" element={<SinglePostPage />} />
-                  <Route path="/auth/user/:id" element={<ProfilePage />} />
-                </Routes>
+
+              <div className="flex flex-1 overflow-hidden"> 
+
+                <Sidebar />
+                <main className="flex-1 overflow-y-auto p-12 bg-black text-white rounded-lg">
+                  <ScrollToTop/>
+                  <Routes>
+                    <Route path="/home" element={<HomePage />} />
+                    <Route path="/profile" element={<ProfilePage />} />
+                    <Route path="/wallet" element={<WalletPage />} />
+                    <Route path="/create" element={<CreatePage />} />
+                    <Route path="/communities" element={<CommunitiesPage />} />
+                    <Route path="/following" element={<FollowingPage />} />
+                    <Route path="/auth/posts/:id" element={<SinglePostPage />} />
+                    <Route path="/auth/user/:id" element={<ProfilePage />} />
+                    <Route path="/community/:id" element={<CommunityPage />} />
+                  </Routes>
+                </main>
               </div>
             </div>
-          )}
-      </AuthModalProvider>
-    </div>
+          </PrivateRoute>
+        }
+      />
+    </Routes>
   );
 }
 

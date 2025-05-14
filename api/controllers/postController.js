@@ -6,11 +6,12 @@ export const createPost = async (req, res) => {
     console.log("creating post");
     try{
         console.log("Creating post with author:", req.user);  // Debug log to ensure req.user is populated
-        const {title, content} = req.body;
+        const {title, content, community} = req.body;
         const newPost = new Post({
             title,
             content,
-            author: req.user.id
+            author: req.user.id,
+            community
         });
 
         await newPost.save();
@@ -127,29 +128,86 @@ export const addComment = async (req, res) => {
   };
 
 export const getPaginatedPosts = async (req, res) => { 
-    try {
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 10;
-        const startIndex = (page - 1) * limit;
-        const endIndex = page * limit;
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
 
-        const totalPosts = await Post.countDocuments();
-        const totalPages = Math.ceil(totalPosts / limit);
+    const totalPosts = await Post.countDocuments();
+    const totalPages = Math.ceil(totalPosts / limit);
 
-        const posts = await Post.find()
-         .sort({ createdAt: -1 })
-         .limit(limit)
-         .skip(startIndex)
-         .populate('author', 'username');
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .skip(startIndex)
+      .populate('author', 'username');
 
-        res.status(200).json({
-          posts,
-          currentPage: page,
-          totalPages,
-          hasNextPage: page < totalPages,
-          hasPreviousPage: page > 1,
-        });
-      } catch (error) {
-        res.status(500).json({ message: "Error getting paginated posts", error });
-      }
-    };
+    res.status(200).json({
+      posts,
+      currentPage: page,
+      totalPages,
+      hasNextPage: page < totalPages,
+      hasPreviousPage: page > 1,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Error getting paginated posts", error });
+  }
+};
+
+export const getPostsByCommunity = async (req, res) => {
+  const { id: community } = req.params;
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+
+  try {
+    const posts = await Post.find({ community })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(limit)
+      .populate('author', 'username');
+
+    const total = await Post.countDocuments({ community });
+    const hasNextPage = page * limit < total;
+
+    res.status(200).json({ posts, hasNextPage });
+  } catch (err) {
+    console.error("Error fetching community posts:", err.message);
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+export const getFollowingPosts = async (req, res) => {
+  try {
+    // 1) Get the currently authenticated user’s ID
+    const userId = req.user.id;
+
+    // 2) Load their `following` array (just IDs)
+    const me = await User.findById(userId).select('following');
+    const followIds = Array.isArray(me.following) ? me.following : [];
+
+    // 3) Pagination params
+    const page  = parseInt(req.query.page)  || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip  = (page - 1) * limit;
+
+    // 4) Query posts where author ∈ followingIds
+    const posts = await Post.find({ author: { $in: followIds } })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .populate('author', '_id username profilePicture')    // optional: show author info
+      .populate('community', '_id name');                   // optional: show community name
+
+    // 5) Compute hasNextPage
+    const total = await Post.countDocuments({ author: { $in: followIds } });
+    const hasNextPage = skip + posts.length < total;
+
+    // 6) Return
+    return res.status(200).json({ posts, hasNextPage });
+  } catch (err) {
+    console.error('Error fetching following posts:', err);
+    return res.status(500).json({ error: 'Server error' });
+  }
+};
+    

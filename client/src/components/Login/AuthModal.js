@@ -10,11 +10,8 @@ import { UserContext } from "./UserContext.js";
 
 function AuthModal() {
     // Variables for displaying the Log In/Sign up
-
     const {modalType, setModalType} = useContext(AuthModalContext);
-
     const { user, setUser, login } = useContext(UserContext);
-
 
     let visibleClass = "";
     if (modalType === 'hidden') {

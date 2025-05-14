@@ -6,10 +6,25 @@
 
 /* Custom CSS Classes */
 .hover-custom {
-    @apply hover:bg-gray-700 transition;
+    @apply hover:bg-zinc-800 transition;
 }
 
 .btn-custom {
     @apply w-full flex items-center gap-2 p-3 rounded-lg;
 }
+
+@layer base {
+    /* Kill horizontal scroll everywhere & ensure the bg is always black */
+    html, body, #root {
+      overflow-x: hidden;
+      background-color: #000;
+    }
+  
+    /* Prevent the “rubber-band” overscroll from revealing white under iOS/Chrome */
+    body {
+      overscroll-behavior-y: contain;
+      overscroll-behavior-x: none;
+    }
+  }
+  
 

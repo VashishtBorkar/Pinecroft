@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 function Sidebar() {
   return (
-    <aside className="w-64 flex bg-main-bg border-r border-border-color text-text-color p-4 fixed top-16 left-0 bottom-0">
+    <aside className="w-64 flex-none h-full bg-main-bg border-r border-border-color text-text-color p-4 ">
       <nav className="flex flex-col gap-4 border-r-gray-500 w-full">
         <Link to="/home" className="btn-custom hover-custom">
           <HomeIcon className="h-5 w-5" />
@@ -15,9 +15,9 @@ function Sidebar() {
           Communities
         </Link>
 
-        <Link to="/trending" className="btn-custom hover-custom">
+        <Link to="/following" className="btn-custom hover-custom">
           <ArrowTrendingUpIcon className="h-5 w-5" />
-          Trending
+          Following
         </Link>
 
         <Link to="/wallet" className="btn-custom hover-custom">
