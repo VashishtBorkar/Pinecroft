@@ -16,9 +16,8 @@ A social media platform for commercial investors to discuss, share, and track ma
 
 ## Demo
 
-<div align="">
-  <a href="https://youtu.be/tnJSi7Vvhak" target="_blank">Link to demo video</a>
-</div>
+<a href="https://youtu.be/tnJSi7Vvhak" target="_blank">Link to demo video</a>
+
 
 ---
 
