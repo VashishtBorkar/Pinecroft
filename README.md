@@ -4,15 +4,41 @@ A social media platform for commercial investors to discuss, share, and track ma
 
 
 ## Table of Contents
+- [Screenshots](#screenshots)
 - [Demo](#demo)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
 - [Installation](#installation)
 - [Environment Variables](#environment-variables)
 - [Running Locally](#running-locally)
-- [Screenshots](#screenshots)
 
 ---
+
+## Screenshots
+<table>
+  <tr>
+    <td align="center">
+      <img src="./assets/landing-page.png" alt="Landing Page" width="600"/>
+      <br><sub><b>Landing Page</b></sub>
+    </td>
+    <td align="center">
+      <img src="./assets/home-feed.png" alt="Home Feed" width="600"/>
+      <br><sub><b>Home Feed</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./assets/profile-page.png" alt="Profile Page" width="600"/>
+      <br><sub><b>Profile Page</b></sub>
+    </td>
+    <td align="center">
+      <img src="./assets/create-post-page.png" alt="Post View" width="600"/>
+      <br><sub><b>Post View</b></sub>
+    </td>
+  </tr>
+</table>
+
+
 
 ## Demo
 
@@ -28,8 +54,6 @@ A social media platform for commercial investors to discuss, share, and track ma
 - **Database:** MongoDB (Atlas)  
 - **Authentication:** JSON Web Tokens (JWT)  
 - **Realtime/Data:** Financial Modeling Prep API   
-
----
 
 ## Features
 
@@ -78,13 +102,3 @@ npm start
 cd client 
 npm start
 ```
-
-## Screenshots
-
-<p align="center">
-  <img src="./assets/screenshot1.png" alt="Feed Page" width="600" />
-</p>
-
-<p align="center">
-  <img src="./assets/screenshot2.png" alt="Community Page" width="600" />
-</p>
