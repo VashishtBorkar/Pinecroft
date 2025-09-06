@@ -11,7 +11,7 @@ import { UserContext } from "../components/Login/UserContext";
 
 
 function SinglePostPage(){
-    const { id } = useParams(); // 👈 get the post ID from the URL
+    const { id } = useParams(); // get the post ID from the URL
     const { user: currentUser } = useContext(UserContext);
     const [post, setPost] = useState({});
     const [user, setUser] = useState({});
@@ -42,7 +42,6 @@ function SinglePostPage(){
           `http://localhost:4000/api/posts/${id}`,
           { withCredentials: true }
         );
-        // Once deleted, go back to wherever makes sense (feed, profile, etc.)
         navigate(-1);
       } catch (err) {
         console.error("Error deleting post", err.response?.data || err);
@@ -84,9 +83,6 @@ function SinglePostPage(){
       const currentUserId = (currentUser?._id ?? currentUser?.id)?.toString();
       const postAuthorId = post.author._id?.toString();
       const isAuthor = currentUserId === postAuthorId;
-
-
-      // console.log("This is the post:", post);
 
     return (
         <div className="max-w-3xl px-4">

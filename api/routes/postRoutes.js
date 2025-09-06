@@ -14,7 +14,7 @@ import {verifyToken} from '../middleware/verifyToken.js';
 
 const router = express.Router();
 
-router.get('/', getPaginatedPosts);  // What should this route be called?
+router.get('/', getPaginatedPosts); 
 
 
 router.get('/community/:id', verifyToken, getPostsByCommunity);
@@ -30,7 +30,6 @@ router.put('/:id', verifyToken, updatePost);  // Only the author can update
 router.delete('/:id', verifyToken, deletePost);  // Only the author can delete
 
 router.post('/:id', verifyToken, deletePost);  // Only the author can delete
-
 
 router.post('/:id/comments', verifyToken, addComment);  // Only the author can update a comment
 

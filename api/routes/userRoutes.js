@@ -11,8 +11,6 @@ router.get('/:id/posts', getUserPosts); // User's posts
 
 router.put("/:id/follow", verifyToken, followUser);
 
-
-
 export default router;
 
 

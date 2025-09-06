@@ -11,7 +11,7 @@ import CommunityListItem from "../components/CommunityListItem";
 
 function ProfilePage() {
     const {user, loading} = useContext(UserContext);
-    const { id } = useParams(); // Assuming you're routing with /user/:userId
+    const { id } = useParams();
 
     const [profileUser, setProfileUser] = useState(null);
     const [userPosts, setUserPosts] = useState([]);

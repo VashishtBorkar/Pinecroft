@@ -245,9 +245,7 @@ function CommunityPage() {
           Load More
         </button>
         )}
-
-
-
+        
         {!hasNextPage && (
           <p className="text-center text-gray-500 mt-6">You’ve reached the end</p>
         )}
