@@ -86,8 +86,8 @@ npm install
 ## Environment Variables 
 ```env
 MONGO_URI=your_mongo_connection_string
-JWT_SECRET=your_jwt_secret
-FMP_KEY=your_financial_api_key
+SECRET_KEY=your_jwt_secret
+FIN_API_KEY=your_financial_api_key
 CLIENT_URL=http://localhost:3000
 ```
 
