@@ -55,7 +55,7 @@ export const addComment = async (req, res) => {
       if (!userId || !content) {
         return res.status(400).json({ error: "Missing user or comment content" });
       }
-  
+      
       const post = await Post.findById(postId);
       if (!post) {
         return res.status(404).json({ error: "Post not found" });

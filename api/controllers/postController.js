@@ -42,7 +42,7 @@ export const getPostById = async (req, res) => {
 
     res.status(200).json(post);
   } catch (error) {
-    console.error("Error in getPostById:", error);  // 👈 log full stack trace
+    console.error("Error in getPostById:", error);
     res.status(500).json({ message: "Error getting post by id", error });
   }
 };
@@ -79,7 +79,6 @@ export const deletePost = async (req, res) => {
   }
 };
 
-// controllers/postController.js (or wherever it lives)
 export const addComment = async (req, res) => {
   try {
     const userId = req.user?.id;
@@ -111,7 +110,7 @@ export const addComment = async (req, res) => {
       console.error("Error adding comment:");
       console.error(err);
       if (err.name === "ValidationError") {
-        console.error("📋 Validation errors:");
+        console.error(" Validation errors:");
         for (const field in err.errors) {
           console.error(` - ${field}: ${err.errors[field].message}`);
         }
@@ -172,10 +171,10 @@ export const getPostsByCommunity = async (req, res) => {
 
 export const getFollowingPosts = async (req, res) => {
   try {
-    // Get the currently authenticated user’s ID
+    // Get user ID
     const userId = req.user.id;
 
-    // Load their `following` array (just IDs)
+    // Load following array
     const me = await User.findById(userId).select('following');
     const followIds = Array.isArray(me.following) ? me.following : [];
 
@@ -184,7 +183,7 @@ export const getFollowingPosts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip  = (page - 1) * limit;
 
-    // Query posts where author ∈ followingIds
+    // Query posts where author in followingIds
     const posts = await Post.find({ author: { $in: followIds } })
       .sort({ createdAt: -1 })
       .skip(skip)

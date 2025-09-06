@@ -10,9 +10,6 @@ export const getStockQuote = async (req, res) => {
     const ticker = req.params.ticker.toUpperCase();
     const url = `https://financialmodelingprep.com/api/v3/quote/${ticker}?apikey=${FIN_API_KEY}`;
 
-
-
-    
     const { data } = await axios.get(url);
     if (!Array.isArray(data) || data.length === 0) {
       return res.status(404).json({ error: 'Ticker not found' });

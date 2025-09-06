@@ -1,11 +1,7 @@
-// api/controllers/communitiesController.js
 import Community from "../models/Community.js";
 import User from "../models/User.js";
 import mongoose from 'mongoose';
 
-
-// @desc   Get all communities
-// @route  GET /api/communities
 export const getAllCommunities = async (req, res) => {
   try {
     const communities = await Community.find().sort({ members: -1 });
@@ -21,13 +17,12 @@ export const toggleMembership = async (req, res) => {
   const communityId = req.params.id;
   const userId      = req.user.id;
 
-  // 1) Quick sanity checks
   if (!mongoose.isValidObjectId(communityId) || !mongoose.isValidObjectId(userId)) {
     return res.status(400).json({ error: "Invalid community or user ID." });
   }
 
   try {
-    // 2) Load community and see if they’re already a member
+
     const community = await Community.findById(communityId).select('members');
     if (!community) {
       return res.status(404).json({ error: "Community not found" });
@@ -36,7 +31,7 @@ export const toggleMembership = async (req, res) => {
     const isMember = community.members
       .some(memberId => memberId.toString() === userId);
 
-    // 3) Prepare our atomic update operators (using the string IDs directly)
+    // Atomic updates using IDs directly
     const commUpdate = isMember
       ? { $pull: { members: userId } }
       : { $addToSet: { members: userId } };
@@ -45,7 +40,7 @@ export const toggleMembership = async (req, res) => {
       ? { $pull: { communities: communityId } }
       : { $addToSet: { communities: communityId } };
 
-    // 4) Fire off both updates in parallel, asking for the “new” doc back each time
+    // Update in parallel for atomicity
     const [updatedCommunity, updatedUser] = await Promise.all([
       Community.findByIdAndUpdate(
         communityId, 
@@ -63,7 +58,6 @@ export const toggleMembership = async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // 5) Return only what the front-end needs
     return res.status(200).json({
       isMember:        !isMember,
       memberCount:     updatedCommunity.members.length,
@@ -86,12 +80,10 @@ export const joinCommunity = async (req, res) => {
         return res.status(404).json({ error: "Community not found" });
       }
   
-      // If the user is already a member, return a message (or you can handle this differently)
       if (community.members.includes(userId)) {
         return res.status(400).json({ error: "User already joined" });
       }
-  
-      // Add the userId to the members array
+
       community.members.push(userId);
       const updatedCommunity = await community.save();
       res.status(200).json(updatedCommunity);
@@ -101,8 +93,6 @@ export const joinCommunity = async (req, res) => {
     }
   };
 
-// @desc   Create a new community
-// @route  POST /api/communities
 export const createCommunity = async (req, res) => {
   const { name, description, members, trending } = req.body;
 
